@@ -34,13 +34,16 @@ function App() {
       .sidebar-gradient {
         background: ${theme.colors.fundoSidebar} !important;
       }
+      .filter-wrapper:hover {
+        background: ${theme.colors.hoverFiltroSidebar} !important;
+      }
     `;
     document.head.appendChild(style);
     
     return () => {
       document.head.removeChild(style);
     };
-  }, [theme.colors.placeholderFiltroSidebar, theme.colors.fundoSidebar]);
+  }, [theme.colors.placeholderFiltroSidebar, theme.colors.fundoSidebar, theme.colors.hoverFiltroSidebar]);
 
   return (
     <div className="flex flex-col h-screen bg-gray-100">
@@ -101,16 +104,29 @@ function App() {
         <aside className="w-64 flex flex-col sidebar-gradient" style={{ color: theme.colors.textoSidebar }}>
           {/* Search */}
           <div className="p-4 relative">
-            <input
-              type="text"
-              placeholder="Filtro..."
-              className="w-full px-3 py-2 rounded text-sm filter-input"
-              style={{ 
-                backgroundColor: theme.colors.fundoFiltroSidebar,
-                color: theme.colors.textoFiltroSidebar
+            <div 
+              className="w-full rounded filter-wrapper"
+              style={{
+                padding: '2px',
+                background: 'transparent',
+                transition: 'background 0.3s ease'
               }}
-            />
-            <Search className="w-4 h-4 absolute right-7 top-6" style={{ color: theme.colors.iconeFiltroSidebar }} />
+            >
+              <input
+                type="text"
+                placeholder="Buscar"
+                className="w-full pl-8 pr-3 py-2 rounded text-sm filter-input"
+                style={{ 
+                  backgroundColor: theme.colors.fundoFiltroSidebar,
+                  color: theme.colors.textoFiltroSidebar,
+                  border: 'none',
+                  outline: 'none',
+                  width: '100%',
+                  background: theme.colors.fundoFiltroSidebar
+                }}
+              />
+            </div>
+            <Search className="w-4 h-4 absolute left-7 top-1/2 transform -translate-y-1/2" style={{ color: theme.colors.iconeFiltroSidebar }} />
           </div>
 
           {/* Menu Items */}
@@ -350,9 +366,9 @@ function App() {
 
                 {/* Time Slots */}
                 {['08', '09', '10', '11', '12', '13', '14', '15', '16', '17'].map((hour) => (
-                  <>
+                  <div key={`hour-${hour}`} className="contents">
                     {/* Time Column */}
-                    <div key={`time-${hour}`} className="border border-gray-100 rounded min-h-[120px] flex items-center justify-center">
+                    <div className="border border-gray-100 rounded min-h-[120px] flex items-center justify-center">
                       <span className="text-xs text-gray-500">{hour} <span className="text-[10px]">00</span></span>
                     </div>
                     
@@ -455,7 +471,7 @@ function App() {
                       }
                       return <div key={`${hour}-${index}`} className="border border-gray-100 rounded min-h-[120px] p-2"></div>;
                     })}
-                  </>
+                  </div>
                 ))}
               </div>
             </div>

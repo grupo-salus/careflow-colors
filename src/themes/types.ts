@@ -32,5 +32,8 @@ export interface Theme {
     slotBloqueado: string;
     slotDisponivel: string;
 
+    // Careflow Brand
+    hoverFiltroSidebar: string;
+
   };
 }

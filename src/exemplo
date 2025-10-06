@@ -1,0 +1,170 @@
+import { useState, useEffect } from 'react';
+import { Menu, Bell, User, Settings, Search, Plus, Calendar, Filter, RefreshCw, ChevronLeft, ChevronRight, Palette, Grid3X3, Home, Layers, DollarSign, ShoppingCart, Building, Code, Handshake, List, BarChart3, ChevronDown } from 'lucide-react';
+import { themes } from './themes';
+
+function App() {
+  const [currentTheme, setCurrentTheme] = useState('sorridents');
+  const [showThemeSelector, setShowThemeSelector] = useState(false);
+  const theme = themes[currentTheme];
+
+  // Defina os profissionais em uma constante para reutilização
+  const professionals = [
+    { initials: 'PG', name: 'Global' },
+    { initials: 'PG', name: 'Global 2' },
+    { initials: 'PE', name: 'Profissional E-commerce' },
+    { initials: 'PE', name: 'ProfissionalExemplo1' },
+    { initials: 'PE', name: 'ProfissionalExemplo2', extra: ['● ErasodadosExemplo1', '● 08:00 - 18:00'] },
+    { initials: 'PE', name: 'ProfissionalExemplo3' },
+    { initials: 'PE', name: 'ProfissionalExtra' }, // Adicionei um 7º para bater com seu código original
+  ];
+
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      .filter-input::placeholder {
+        color: ${theme.colors.placeholderFiltroSidebar} !important;
+      }
+      .sidebar-gradient {
+        background: ${theme.colors.fundoSidebar} !important;
+      }
+    `;
+    document.head.appendChild(style);
+    
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, [theme.colors.placeholderFiltroSidebar, theme.colors.fundoSidebar]);
+
+  return (
+    <div className="flex flex-col h-screen bg-gray-100">
+        {/* Top Bar (sem alterações) */}
+        <header className="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between">
+            {/* ...código da Top Bar aqui... */}
+        </header>
+
+        <div className="flex flex-1">
+            {/* Sidebar (sem alterações) */}
+            <aside className="w-64 flex flex-col sidebar-gradient" style={{ color: theme.colors.textoSidebar }}>
+                {/* ...código da Sidebar aqui... */}
+            </aside>
+
+            {/* Main Content */}
+            <div className="flex-1 flex flex-col">
+                {/* Toolbar (sem alterações) */}
+                <div className="px-6 py-3 flex items-center gap-3" style={{ backgroundColor: theme.colors.fundoToolbar }}>
+                   {/* ...código da Toolbar aqui... */}
+                </div>
+
+                {/* Calendar Content */}
+                <div className="flex-1 overflow-auto" style={{ backgroundColor: theme.colors.slotIndisponivel }}>
+                <div className="p-6">
+                    {/* Calendar Header (sem alterações) */}
+                    <div className="text-white px-4 py-3 rounded-t-lg flex items-center justify-between" style={{ backgroundColor: theme.colors.fundoHeaderCalendario }}>
+                         {/* ...código do Calendar Header aqui... */}
+                    </div>
+
+                    {/* ############### INÍCIO DAS MUDANÇAS ############### */}
+
+                    {/* Calendar Grid */}
+                    <div className="bg-white rounded-b-lg overflow-hidden" style={{ borderLeft: `1px solid ${theme.colors.bordaSidebar}`, borderRight: `1px solid ${theme.colors.bordaSidebar}` }}>
+                        <div className="flex border-b border-gray-200 pb-3">
+                            {/* Time Column Header */}
+                            <div className="w-24 p-3 border border-gray-100 rounded mr-3 min-h-[120px] flex items-center justify-center">
+                                <div className="text-sm font-medium text-gray-500">Horário</div>
+                            </div>
+                            
+                            {/* Content Column Headers - Usando a constante */}
+                            <div className="flex gap-3 flex-1">
+                                {professionals.map((col, idx) => (
+                                    <div key={idx} className="p-3 border border-gray-100 rounded flex-1 min-h-[120px] flex flex-col justify-center">
+                                        <div className="flex items-center gap-2 mb-2">
+                                        <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style={{ backgroundColor: theme.colors.fundoAvatar }}>
+                                            {col.initials}
+                                        </div>
+                                        <div className="flex-1">
+                                            <div className="text-sm font-medium truncate">{col.name}</div>
+                                            {col.extra?.map((text, i) => (
+                                            <div key={i} className="text-xs text-gray-500 truncate">{text}</div>
+                                            ))}
+                                        </div>
+                                        </div>
+                                        <div className="text-xs text-gray-500">3 <span className="uppercase">sex</span></div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Time Slots - 08:00 Row - CORRIGIDO */}
+                        <div className="flex mb-3">
+                            {/* Time Column */}
+                            <div className="w-24 p-3 border border-gray-100 rounded mr-3 min-h-[120px] flex items-center justify-center">
+                                <span className="text-xs text-gray-500">08 <span className="text-[10px]">00</span></span>
+                            </div>
+                            
+                            {/* Content Columns - CORRIGIDO para mapear e ter 7 colunas */}
+                            <div className="flex gap-3 flex-1">
+                                {professionals.map((_, index) => {
+                                    // Use o 'index' para recriar o conteúdo original de cada coluna
+                                    if (index === 0) {
+                                        return <div key={index} className="p-3 border border-gray-100 rounded min-h-[120px] flex-1" style={{ backgroundColor: theme.colors.slotBloqueado }}></div>;
+                                    }
+                                    if (index === 1) {
+                                        return (
+                                            <div key={index} className="p-3 border border-gray-100 rounded min-h-[120px] flex-1">
+                                                {[
+                                                    { name: 'Arthur Manuel Brito', status: 'completed' },
+                                                    { name: 'Eliane Agatha Eliane San...', status: 'completed' }
+                                                ].map((appt, idx) => (
+                                                    <div key={idx} className="bg-white p-2 rounded shadow-sm mb-1" style={{ borderLeft: `4px solid ${theme.colors.statusConcluido}` }}>
+                                                        <div className="text-xs font-medium">{appt.name}</div>
+                                                        <div className="text-[10px] text-gray-500">Avaliação - Realizada</div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        );
+                                    }
+                                    // Adicione outras condições para os outros índices se necessário...
+                                    // Coluna 4 do seu código original (índice 3)
+                                    if (index === 3) {
+                                        return <div key={index} className="p-3 border border-gray-100 rounded min-h-[120px] flex-1" style={{ backgroundColor: theme.colors.slotDisponivel }}></div>;
+                                    }
+                                    // Para as colunas que não têm conteúdo específico, renderize um slot vazio
+                                    return <div key={index} className="p-3 border border-gray-100 rounded min-h-[120px] flex-1"></div>;
+                                })}
+                            </div>
+                        </div>
+
+                        {/* 09:00, 10:00, 11:00 Rows - CORRIGIDO */}
+                        {['09', '10', '11'].map((hour) => (
+                            <div key={hour} className="flex mb-3">
+                                {/* Time Column */}
+                                <div className="w-24 p-3 border border-gray-100 rounded mr-3 min-h-[120px] flex items-center justify-center">
+                                    <span className="text-xs text-gray-500">{hour} <span className="text-[10px]">00</span></span>
+                                </div>
+                                
+                                {/* Content Columns - CORRIGIDO para mapear e ter 7 colunas */}
+                                <div className="flex gap-3 flex-1">
+                                    {professionals.map((_, index) => {
+                                        // Lógica condicional para colorir slots específicos se necessário
+                                        if (index === 0) {
+                                            return <div key={index} className="p-3 border border-gray-100 rounded min-h-[120px] flex-1" style={{ backgroundColor: theme.colors.slotBloqueado }}></div>;
+                                        }
+                                        if (index === 3) {
+                                            return <div key={index} className="p-3 border border-gray-100 rounded min-h-[120px] flex-1" style={{ backgroundColor: theme.colors.slotDisponivel }}></div>;
+                                        }
+                                        return <div key={index} className="p-3 border border-gray-100 rounded min-h-[120px] flex-1"></div>
+                                    })}
+                                </div>
+                            </div>
+                        ))}
+                         {/* ############### FIM DAS MUDANÇAS ############### */}
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  );
+}
+
+export default App;

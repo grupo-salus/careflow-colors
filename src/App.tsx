@@ -7,6 +7,13 @@ function App() {
   const [showThemeSelector, setShowThemeSelector] = useState(false);
   const theme = themes[currentTheme];
 
+  // Cores de status globais (mesmas para todos os temas)
+  const statusColors = {
+    concluido: 'linear-gradient(135deg, #10B981 0%, #059669 100%)', // Verde gradiente
+    pendente: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)', // Amarelo gradiente
+    emAndamento: 'linear-gradient(135deg, #EF4444 0%, #DC2626 100%)', // Vermelho gradiente
+  };
+
   // Defina os profissionais em uma constante para reutilização
   const professionals = [
     { initials: 'PG', name: 'Global' },
@@ -362,9 +369,15 @@ function App() {
                                 { name: 'Arthur Manuel Brito', status: 'completed' },
                                 { name: 'Eliane Agatha Eliane San...', status: 'completed' }
                               ].map((appt, idx) => (
-                                <div key={idx} className="bg-white p-2 rounded shadow-sm mb-1" style={{ borderLeft: `4px solid ${theme.colors.statusConcluido}` }}>
-                                  <div className="text-xs font-medium">{appt.name}</div>
-                                  <div className="text-[10px] text-gray-500">Avaliação - Realizada</div>
+                                <div key={idx} className="bg-white p-2 rounded shadow-sm mb-1 relative">
+                                  <div 
+                                    className="absolute left-0 top-0 bottom-0 w-1 rounded-l"
+                                    style={{ background: statusColors.concluido }}
+                                  />
+                                  <div className="ml-2">
+                                    <div className="text-xs font-medium">{appt.name}</div>
+                                    <div className="text-[10px] text-gray-500">Avaliação - Realizada</div>
+                                  </div>
                                 </div>
                               ))}
                             </div>
@@ -384,16 +397,22 @@ function App() {
                                 { name: 'Fernando Man', status: 'pending' },
                                 { name: 'Eliane Rezender', status: 'inProgress' }
                               ].map((appt, idx) => {
-                                const statusColor = appt.status === 'completed' ? theme.colors.statusConcluido :
-                                                  appt.status === 'pending' ? theme.colors.statusPendente :
-                                                  theme.colors.statusEmAndamento;
+                                const statusColor = appt.status === 'completed' ? statusColors.concluido :
+                                                  appt.status === 'pending' ? statusColors.pendente :
+                                                  statusColors.emAndamento;
                                 const statusText = appt.status === 'completed' ? 'Realizada' :
                                                  appt.status === 'pending' ? 'Em aberto' :
                                                  'No local';
                                 return (
-                                  <div key={idx} className="bg-white p-2 rounded shadow-sm mb-1" style={{ borderLeft: `4px solid ${statusColor}` }}>
-                                    <div className="text-xs font-medium">{appt.name}</div>
-                                    <div className="text-[10px] text-gray-500">Avaliação - {statusText}</div>
+                                  <div key={idx} className="bg-white p-2 rounded shadow-sm mb-1 relative">
+                                    <div 
+                                      className="absolute left-0 top-0 bottom-0 w-1 rounded-l"
+                                      style={{ background: statusColor }}
+                                    />
+                                    <div className="ml-2">
+                                      <div className="text-xs font-medium">{appt.name}</div>
+                                      <div className="text-[10px] text-gray-500">Avaliação - {statusText}</div>
+                                    </div>
                                   </div>
                                 );
                               })}
@@ -411,9 +430,15 @@ function App() {
                                 { name: 'Diego Eduardo Marcelo C...', status: 'completed' },
                                 { name: 'Diego Eduardo Marcelo C...', status: 'completed' }
                               ].map((appt, idx) => (
-                                <div key={idx} className="bg-white p-2 rounded shadow-sm mb-1" style={{ borderLeft: `4px solid ${theme.colors.statusConcluido}` }}>
-                                  <div className="text-xs font-medium">{appt.name}</div>
-                                  <div className="text-[10px] text-gray-500">Avaliação - Realizada</div>
+                                <div key={idx} className="bg-white p-2 rounded shadow-sm mb-1 relative">
+                                  <div 
+                                    className="absolute left-0 top-0 bottom-0 w-1 rounded-l"
+                                    style={{ background: statusColors.concluido }}
+                                  />
+                                  <div className="ml-2">
+                                    <div className="text-xs font-medium">{appt.name}</div>
+                                    <div className="text-[10px] text-gray-500">Avaliação - Realizada</div>
+                                  </div>
                                 </div>
                               ))}
                             </div>

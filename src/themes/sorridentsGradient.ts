@@ -35,9 +35,5 @@ export const sorridentsGradientTheme: Theme = {
     slotBloqueado: '#e0e0e0', // Cinza claro para bloqueado
     slotDisponivel: '#e8f4fd', // Azul muito claro baseado na cor principal
 
-    // ===== STATUS COLORS =====
-    statusConcluido: '#009640', // PANTONE 355C - Verde para concluído
-    statusPendente: '#F5C808', // PANTONE 109C - Amarelo para pendente
-    statusEmAndamento: '#E30613', // PANTONE 185C - Vermelho para em andamento
   },
 };

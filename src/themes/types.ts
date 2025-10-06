@@ -32,9 +32,5 @@ export interface Theme {
     slotBloqueado: string;
     slotDisponivel: string;
 
-    // Status Colors
-    statusConcluido: string;
-    statusPendente: string;
-    statusEmAndamento: string;
   };
 }

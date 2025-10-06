@@ -35,9 +35,5 @@ export const gioGradientTheme: Theme = {
     slotBloqueado: '#e2e8f0', // Cinza claro
     slotDisponivel: 'linear-gradient(135deg, #fce7f3 0%, #f3e8ff 100%)', // Gradiente rosa → roxo muito claro
 
-    // ===== STATUS COLORS =====
-    statusConcluido: '#009640', // PANTONE 355C - Verde para concluído
-    statusPendente: '#F5C808', // PANTONE 109C - Amarelo para pendente
-    statusEmAndamento: '#E30613', // PANTONE 185C - Vermelho para em andamento
   },
 };
